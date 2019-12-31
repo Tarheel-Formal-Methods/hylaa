@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>timerutil.py &#8212; hylaa  documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-hylaa.timerutil">
+<span id="timerutil-py"></span><h1>timerutil.py<a class="headerlink" href="#module-hylaa.timerutil" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-timerutil"></span><p>Timer utility functions for Hylaa. Timers are used for performance analysis and
+can be statically referred to using Timers.tic(name) and Timers.toc(name)
+September 2016</p>
+<dl class="class">
+<dt id="hylaa.timerutil.TimerData">
+<em class="property">class </em><code class="sig-prename descclassname">hylaa.timerutil.</code><code class="sig-name descname">TimerData</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">parent</em><span class="sig-paren">)</span><a class="headerlink" href="#hylaa.timerutil.TimerData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performance timer object which can be started with the tic() method and paused with toc() method</p>
+<dl class="method">
+<dt id="hylaa.timerutil.TimerData.full_name">
+<code class="sig-name descname">full_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hylaa.timerutil.TimerData.full_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the full name of the timer (including ancestors)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>full string description of timer</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hylaa.timerutil.TimerData.get_child">
+<code class="sig-name descname">get_child</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#hylaa.timerutil.TimerData.get_child" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a child timer with the given name</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hylaa.timerutil.TimerData.get_children_recursive">
+<code class="sig-name descname">get_children_recursive</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#hylaa.timerutil.TimerData.get_children_recursive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all decendants with the given name (returns a list of TimerData)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hylaa.timerutil.TimerData.tic">
+<code class="sig-name descname">tic</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hylaa.timerutil.TimerData.tic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start the timer. Utilizes the time module to track elapsed time.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hylaa.timerutil.TimerData.toc">
+<code class="sig-name descname">toc</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hylaa.timerutil.TimerData.toc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop the timer. Timer must be started with the tic() method beforehand.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hylaa.timerutil.Timers">
+<em class="property">class </em><code class="sig-prename descclassname">hylaa.timerutil.</code><code class="sig-name descname">Timers</code><a class="headerlink" href="#hylaa.timerutil.Timers" title="Permalink to this definition">¶</a></dt>
+<dd><p>A static class for doing timer measurements.</p>
+<ul class="simple">
+<li><p>Timers.tic(name)</p></li>
+<li><p>Timers.tic(name) to start and stop timers</p></li>
+<li><p>print_stats() to print time statistics</p></li>
+</ul>
+<p>This object includes a stack of TimerData objects. Timers are stopped in respect to the stack order where the timers on the top
+are stopped first.</p>
+<dl class="method">
+<dt id="hylaa.timerutil.Timers.print_stats">
+<em class="property">static </em><code class="sig-name descname">print_stats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hylaa.timerutil.Timers.print_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print statistics about performance timers to stdout</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hylaa.timerutil.Timers.print_stats_recursive">
+<em class="property">static </em><code class="sig-name descname">print_stats_recursive</code><span class="sig-paren">(</span><em class="sig-param">td</em>, <em class="sig-param">level</em>, <em class="sig-param">total_time</em><span class="sig-paren">)</span><a class="headerlink" href="#hylaa.timerutil.Timers.print_stats_recursive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recursively print information about a timer</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hylaa.timerutil.Timers.reset">
+<em class="property">static </em><code class="sig-name descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hylaa.timerutil.Timers.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset all timers</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hylaa.timerutil.Timers.tic">
+<em class="property">static </em><code class="sig-name descname">tic</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#hylaa.timerutil.Timers.tic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts a timer with a specific name. If such a timer doesn’t exist, create it and push it into the stack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> – name of timer</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hylaa.timerutil.Timers.toc">
+<em class="property">static </em><code class="sig-name descname">toc</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#hylaa.timerutil.Timers.toc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop a timer with a specific name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> – name of timer</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">hylaa</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Stanley Bak.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/docrst/timerutil.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

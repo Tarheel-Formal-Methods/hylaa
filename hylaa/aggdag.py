@@ -1,7 +1,7 @@
-'''
+"""
 Stanley Bak
 Aggregation Directed Acyclic Graph (DAG) implementation
-'''
+"""
 
 from termcolor import cprint
 
@@ -20,7 +20,7 @@ class AggDag(Freezable):
     def __init__(self, settings, core):
         self.settings = settings
         self.core = core
-        
+
         self.roots = [] # list of root AggDagNode where the computation begins
         self.cur_node = None # the aggdag_node currently under a continuous post operation
 
@@ -29,7 +29,7 @@ class AggDag(Freezable):
         self.deagg_man = DeaggregationManager(self)
 
         self.viz_count = 0
-        
+
         self.freeze_attrs()
 
     @staticmethod
@@ -73,7 +73,7 @@ class AggDag(Freezable):
 
         if self.settings.stdout >= HylaaSettings.STDOUT_VERBOSE:
             col = self.settings.stdout_colors[HylaaSettings.STDOUT_VERBOSE]
-            
+
             cprint("Waiting list has {} states".format(len(self.waiting_list)), col)
 
             if len(self.waiting_list) < 20:
@@ -83,7 +83,7 @@ class AggDag(Freezable):
 
                     if isinstance(op, OpTransition):
                         trans = op.transition
-                    
+
                     cprint(" [Mode: {} (from transition {}) at steps {}]".format(state.mode.name, trans,
                                                                                  state.cur_steps_since_start), col)
 
@@ -187,7 +187,7 @@ class AggDag(Freezable):
 
         # if we're popping error mode, pop them one at a time
         # this is to prevent aggregation, which may use successor mode dynamics information
-        if op_list[0].poststate.mode.a_csr is None: 
+        if op_list[0].poststate.mode.a_csr is None:
             op_list = [op_list[0]]
 
         # if we're popping a mode with no predecessor, an initial mode, pop one at a time
@@ -226,7 +226,7 @@ class AggDag(Freezable):
         #if plot:
         #    print(".aggdag make_node() plotting aggdagnode")
         #    self.core.plotman.add_plotted_states([node.stateset])
-            
+
         return node
 
     def save_viz(self):
@@ -234,7 +234,7 @@ class AggDag(Freezable):
 
         filename = f"aggdag_{self.viz_count:02d}"
         self.viz_count += 1
-                
+
         self.viz(filename=filename)
 
         return filename
@@ -251,7 +251,7 @@ class AggDag(Freezable):
             g.graph_attr['rankdir'] = 'LR'
 
         #g.edge_attr.update(arrowhead='dot', arrowsize='2')
-        
+
         already_drawn_nodes = []
 
         for i, root in enumerate(self.roots):
@@ -290,7 +290,7 @@ class AggDagNode(Freezable):
 
         # make the stateset
         state = None
-        
+
         if len(state_list) == 1:
             state = state_list[0]
         else:
@@ -304,15 +304,15 @@ class AggDagNode(Freezable):
         for op in parent_op_list:
             # child node here may be None, or an existing child node that we override
             op.child_node = self
-            
+
             if op.parent_node is None:
                 add_root = True
-            
+
         if add_root:
             self.aggdag.roots.append(self)
 
         self.stateset = state
-        
+
         self.freeze_attrs()
 
     # override __hash__ and __eq__ so nodes can be keys in a dict
@@ -336,7 +336,7 @@ class AggDagNode(Freezable):
             parent_aggstring = ''
 
         rv = []
-        
+
         mid_index = len(self.parent_ops) // 2
         parent_op_lists = [self.parent_ops[:mid_index], self.parent_ops[mid_index:]]
 
@@ -428,11 +428,11 @@ class AggDagNode(Freezable):
             # hmm, skipping invariant intersections is only valid if deaggregation is a subset of aggregated set...
             # for our krylov aggregation, this isn't really the case though... so in general you need to invaraint
             # intersect at every step... plus this is really an optimization rather than the main algorithm
-            
+
             if True or not skip:
                 self.aggdag.core.print_verbose(
                     f"doing invariant intersection in replay at step {cur_state.cur_step_in_mode}")
-                
+
                 is_feasible = self.replay_op_intersect_invariant(cur_state, op)
 
                 if not is_feasible:
@@ -452,7 +452,7 @@ class AggDagNode(Freezable):
         state.step(op.step) # advance the state first
 
         # check if the transition is still enabled
-        
+
         t = op.transition
 
         t_lpi = t.get_guard_intersection(state.lpi)
@@ -493,12 +493,12 @@ class AggDagNode(Freezable):
         lc = state.mode.inv_list[invariant_index]
 
         has_intersection = lputil.check_intersection(state.lpi, lc.negate())
-        
+
         if has_intersection is None:
             rv = False # not feasible
         elif not has_intersection:
             rv = True # no intersection and still feasible
-        else: 
+        else:
             old_row = state.invariant_constraint_rows[invariant_index]
             vec = lc.csr.toarray()[0]
             rhs = lc.rhs
@@ -571,7 +571,7 @@ class AggDagNode(Freezable):
                     child_name = f"out_{id(self)}_{id(op.transition)}"
                 else:
                     child_name = "node_{}".format(id(op.child_node))
-                    
+
                 found = False
 
                 for pair in enabled_transitions:
@@ -588,12 +588,12 @@ class AggDagNode(Freezable):
                         label = str(op_list[0].step)
                     else:
                         label = "[{}, {}]".format(op_list[0].step, op_list[-1].step)
-                        
+
 
                     if child_name.startswith('out_'): # outgoing edges to unprocessed nodes
                         to_mode_name = op_list[0].transition.to_mode.name
                         g.node(child_name, label=to_mode_name, style="dashed")
-                    
+
                     g.edge(name, child_name, label=label)
 
                 enabled_transitions = []
@@ -622,7 +622,7 @@ class AggDagNode(Freezable):
                     if child_name.startswith('out_'): # outgoing edges to unprocessed nodes
                         to_mode_name = op_list[0].transition.to_mode.name
                         g.node(child_name, label=to_mode_name, style="dashed")
-                        
+
                     g.edge(name, child_name, label=label)
                 else:
                     # keep it

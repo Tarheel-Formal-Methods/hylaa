@@ -1,17 +1,18 @@
-'''
-Timer utility functions for Hylaa. Timers are used for performance analysis and
-can be refered to statically using Timers.tic(name) and Timers.toc(name)
+"""
+.. module:: timerutil
+.. moduleauthor:: Stanley Bak
 
-Stanley Bak
+Timer utility functions for Hylaa. Timers are used for performance analysis and
+can be statically referred to using Timers.tic(name) and Timers.toc(name)
 September 2016
-'''
+"""
 
 import time
 
 from termcolor import cprint
 
 class TimerData():
-    'Performance timer which can be started with tic() and paused with toc()'
+    """Performance timer object which can be started with the tic() method and paused with toc() method"""
 
     def __init__(self, name, parent):
         assert parent is None or isinstance(parent, TimerData)
@@ -25,7 +26,8 @@ class TimerData():
         self.children = [] # a list of child TimerData
 
     def get_child(self, name):
-        'get a child timer with the given name'
+        """Get a child timer with the given name
+        """
 
         rv = None
 
@@ -37,8 +39,8 @@ class TimerData():
         return rv
 
     def get_children_recursive(self, name):
-        'get all decendants with the given name (returns a list of TimerData)'
-
+        """Get all decendants with the given name (returns a list of TimerData)
+        """
         rv = []
 
         if name == self.name:
@@ -50,7 +52,11 @@ class TimerData():
         return rv
 
     def full_name(self):
-        'get the full name of the timer (including ancestors)'
+        """Returns the full name of the timer (including ancestors)
+
+            :returns: full string description of timer
+            :rtype: str
+        """
 
         if self.parent is None:
             return self.name
@@ -58,7 +64,7 @@ class TimerData():
         return "{}.{}".format(self.parent.full_name(), self.name)
 
     def tic(self):
-        'start the timer'
+        """Start the timer. Utilizes the time module to track elapsed time."""
 
         #print "Tic({})".format(self.name)
 
@@ -69,7 +75,7 @@ class TimerData():
         self.last_start_time = time.perf_counter()
 
     def toc(self):
-        'stop the timer'
+        """Stop the timer. Timer must be started with the tic() method beforehand."""
 
         #print "Toc({})".format(self.name)
 
@@ -80,11 +86,17 @@ class TimerData():
         self.last_start_time = None
 
 class Timers():
-    '''
-    a static class for doing timer messuarements. Use
-    Timers.tic(name) and Timers.tic(name) to start and stop timers, use
-    print_stats to print time statistics
-    '''
+    """
+    A static class for doing timer measurements.
+
+    - Timers.tic(name)
+    - Timers.tic(name) to start and stop timers
+    - print_stats() to print time statistics
+
+    This object includes a stack of TimerData objects. Timers are stopped in respect to the stack order where the timers on the top
+    are stopped first.
+
+    """
 
     top_level_timer = None
 
@@ -95,14 +107,17 @@ class Timers():
 
     @staticmethod
     def reset():
-        'reset all timers'
+        'Reset all timers'
 
         Timers.top_level_timer = None
         Timers.stack = []
 
     @staticmethod
     def tic(name):
-        'start a timer'
+        """Starts a timer with a specific name. If such a timer doesn't exist, create it and push it into the stack.
+
+            :param name: name of timer
+        """
 
         #print("Tic({})".format(name))
 
@@ -133,7 +148,10 @@ class Timers():
 
     @staticmethod
     def toc(name):
-        'stop a timer'
+        """Stop a timer with a specific name
+
+            :param name: name of timer
+        """
 
         #print("Toc({})".format(name))
 
@@ -145,13 +163,17 @@ class Timers():
 
     @staticmethod
     def print_stats():
-        'print statistics about performance timers to stdout'
+        'Print statistics about TimerData objects to stdout'
 
         Timers.print_stats_recursive(Timers.top_level_timer, 0, None)
 
     @staticmethod
     def print_stats_recursive(td, level, total_time):
-        'recursively print information about a timer'
+        """Recursively print information about a timer
+
+            :param td: TimerData object
+            :param level:
+        """
 
         low_threshold = 5.0
         high_threshold = 50.0

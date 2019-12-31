@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Welcome to Hylaa’s documentation! &#8212; hylaa  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="welcome-to-hylaa-s-documentation">
+<h1>Welcome to Hylaa’s documentation!<a class="headerlink" href="#welcome-to-hylaa-s-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<img alt="_images/hylaa_logo_small.png" class="align-center" src="_images/hylaa_logo_small.png" />
+</div>
+<div class="section" id="introduction-to-hylaa">
+<h1>Introduction to Hylaa<a class="headerlink" href="#introduction-to-hylaa" title="Permalink to this headline">¶</a></h1>
+<p>Hylaa (<a href="#id1"><span class="problematic" id="id2">**</span></a>HY**brid <a href="#id3"><span class="problematic" id="id4">**</span></a>L**inear <a href="#id5"><span class="problematic" id="id6">**</span></a>A**utomata <a href="#id7"><span class="problematic" id="id8">**</span></a>A**nalyzer) is a verification tool for system models with linear ODEs, time-varying inputs, and possibly hybrid dynamics.</p>
+<p>The is version two of Hylaa, with support for resets and hybrid automata with time-varying inputs. The focus has shifted from performance to handling more general dynamics.
+The latest version of Hylaa is always available on our github repository at <a class="reference external" href="https://github.com/stanleybak/hylaa">https://github.com/stanleybak/hylaa</a> . A website for Hylaa is maintained at <a class="reference external" href="http://stanleybak.com/hylaa">http://stanleybak.com/hylaa</a> .
+The main citation to use for Hylaa is: “HyLAA: A Tool for Computing Simulation-Equivalent Reachability for Linear Systems”, S. Bak, P. Duggirala, 20th International Conference on Hybrid Systems: Computation and Control (HSCC 2017)</p>
+<p>The code was mostly written by Stanley Bak (<a class="reference external" href="http://stanleybak.com">http://stanleybak.com</a>) with input from Parasara Sridhar Duggirala (<a class="reference external" href="http://engr.uconn.edu/~psd">http://engr.uconn.edu/~psd</a>).</p>
+<p>Hylaa is released under the GPL v3 license (see the LICENSE file). Earlier versions have been approved for public release (DISTRIBUTION A: Approved for public release; distribution unlimited #88ABW-2016-5976, 22 NOV 2016).</p>
+</div>
+<div class="section" id="installation-instructions">
+<h1>Installation Instructions<a class="headerlink" href="#installation-instructions" title="Permalink to this headline">¶</a></h1>
+<p>This version of Hylaa runs in <cite>python3</cite> and requires a few other libraries that you can install with <cite>pip3</cite>, the python package manager. You must also set your <cite>PYTHONPATH</cite> environment variable so that it knows where the hylaa source is located. There is a <cite>Dockerfile</cite> in this repository which is used as part of our continuous integration framework that has step by step commands for installing the necessary packages and dependencies. This serves as the installation documentation, as it’s always up to date.</p>
+</div>
+<div class="section" id="getting-started-examples">
+<h1>Getting Started + Examples<a class="headerlink" href="#getting-started-examples" title="Permalink to this headline">¶</a></h1>
+<p>The easiest way to get started with Hylaa is to run some of the examples. Once installed and setup, Hylaa models are just python source files you directly with <cite>python3</cite> in a terminal.</p>
+<p>Go to <cite>examples/harmonic_oscillator</cite> and run <cite>ha.py</cite> from the command line (<cite>python ha.py</cite>). This should create <cite>plot.png</cite> in the same folder, which will be an 2-d plot of the reachable set.</p>
+<p>The dynamics in this example are given as x’ = <strong>A</strong> x, where <strong>A</strong> is the (potentially sparse) dynamics matrix. This is defined in the <cite>define_ha</cite> function in the <cite>ha.py</cite> source file.</p>
+<p>Initial states and unsafe states are given as conjunctions of linear constraints. These are defined in the <cite>make_init</cite> function.</p>
+<p>Finally, computation settings are given in the <cite>define_settings</cite> function. There are lots of settings that can be adjusted, which can be found in <cite>hylaa/settings.py</cite>, including comments describing what each one does.</p>
+<p>The easiest way to use Hylaa on your example is to copy an example from the examples folder and edit that. Notice that models are python code, which means you can
+create the model programatically using loops or by loading the dynamics from a .mat file.</p>
+</div>
+<div class="section" id="documentation">
+<h1>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference internal" href="docindex.html"><span class="doc">Documentation</span></a></p>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">hylaa</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Stanley Bak.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

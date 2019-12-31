@@ -1,4 +1,4 @@
-'''
+"""
 Generate concrete traces from counter-examples found by HyLAA.
 
 The check() function performs a concrete simulation to find check close
@@ -6,7 +6,7 @@ a violation found by HyLAA is to an actual simulation.
 
 Stanley Bak
 December 2016
-'''
+"""
 
 import time
 import math

@@ -1,7 +1,7 @@
 '''
 Stanley Bak
 
-Code assocaited with counterexamples.
+Code associated with counterexamples.
 '''
 
 from collections import defaultdict
@@ -37,8 +37,8 @@ class HylaaResult(Freezable): # pylint: disable=too-few-public-methods
 
         # lines plotted for simulations
         # nested lists. first index is plot number, second is segment number,
-        # third is simulation number, last is list of 2-d points 
-        self.sim_lines = None 
+        # third is simulation number, last is list of 2-d points
+        self.sim_lines = None
 
         self.freeze_attrs()
 
@@ -97,7 +97,7 @@ class PlotData(Freezable):
         clicked = Point(x, y)
 
         for mode, obj_list in mode_to_obj.items():
-            
+
             for obj in obj_list:
                 verts = obj[0]
 
@@ -105,7 +105,7 @@ class PlotData(Freezable):
                     continue
 
                 verts_2dp = [Point2D(x, y) for x, y in verts[1:]]
-                                
+
                 poly = Polygon(*verts_2dp)
 
                 if poly.encloses_point(clicked):
@@ -129,7 +129,7 @@ class CounterExampleSegment(Freezable):
         self.reset_minkowski_vars = [] # a list of minkowski variables in the outgoing reset
 
         self.inputs = deque() # inputs at each step (a deque of m-tuples, where m is the number of inputs)
-        
+
         self.freeze_attrs()
 
     def __str__(self):
@@ -194,7 +194,7 @@ def make_counterexample(ha, state, transition_to_error, lpi):
             elif '_I' in name:
                 if '_I0' in name:
                     seg.inputs.appendleft([])
-                    
+
                 # inputs are in backwards order due to how the LP is constructed, prepend it
                 seg.inputs[0].append(value)
 
@@ -218,7 +218,7 @@ def replay_counterexample(ce_segment_list, ha, settings):
 
     epsilon = 1e-7
     step_size = settings.step_size
-    
+
     for i, segment in enumerate(ce_segment_list):
         inv_list = segment.mode.inv_list
         a_mat = segment.mode.a_csr
@@ -235,10 +235,10 @@ def replay_counterexample(ce_segment_list, ha, settings):
 
         rv += [s for s in states]
         t_offset = 0
-        
+
         if all_times:
             t_offset = all_times[-1]
-            
+
         all_times += [t + t_offset for t in times]
 
         # check if in invariant up to the last step
@@ -249,7 +249,7 @@ def replay_counterexample(ce_segment_list, ha, settings):
                 assert lhs <= lc.rhs + epsilon, "invariant became false during replay counterexample"
 
         assert np.allclose(states[-1], segment.end)
-                
+
         # check that last state -> reset -> first state is correct
         t = segment.outgoing_transition
         lhs = t.guard_csr * states[-1]

@@ -1,8 +1,7 @@
-'''
+"""
 Stanley Bak
-
 Implementation of concrete aggregation methods, used by aggdag
-'''
+"""
 
 import numpy as np
 
@@ -73,7 +72,7 @@ def aggregate_box_arnoldi(agg_list, op_list, is_box, is_arnoldi, add_guard, prin
 
     if op and add_guard:
         # add all the guard conditions to the agg_dir_mat
-        
+
         t = op.transition
 
         if t.reset_csr is None: # identity reset
