@@ -48,7 +48,7 @@ class HylaaSettings(Freezable):  # pylint: disable=too-few-public-methods
         self.stop_on_aggregated_error = False # stop whenever any state (aggregated or not) reaches an error mode
         self.stop_on_concrete_error = True # stop whenver a concrete state reaches an error
         self.make_counterexample = True # save counter-example to data structure / file?
-        
+
         self.aggstrat = aggstrat.Aggregated() # aggregation strategy class
 
         # for deterministic random numbers (simulations / color selection)
@@ -67,7 +67,7 @@ class PlotSettings(Freezable): # pylint: disable=too-few-public-methods,too-many
 
     def __init__(self):
         self.plot_mode = PlotSettings.PLOT_NONE
-        
+
         self.store_plot_result = False # store the reachable plot data inside the computation result object?
 
         self.filename = None # filename to print data to for certain plot modes
@@ -83,7 +83,7 @@ class PlotSettings(Freezable): # pylint: disable=too-few-public-methods,too-many
         self.num_angles = 512 # how many evenly-spaced angles to put into plot_vecs
 
         self.draw_stride = 1 # draw every n frames (good to inscrease if number of steps is large)
-        
+
         self.reachable_poly_width = 2 # width of reachable polygon outlines
         self.extend_plot_range_ratio = 0.1 # extend plot axis range 10% at a time
 
@@ -113,11 +113,10 @@ class PlotSettings(Freezable): # pylint: disable=too-few-public-methods,too-many
             return writer_class(fps=self.video_fps, metadata=dict(artist='Me'), bitrate=1800)
 
         self.make_video_writer_func = make_video_writer
-
         self.freeze_attrs()
 
 class LabelSettings(Freezable):
-    'settings for labels such as plot title, plot font size, ect.'
+    """SHettings for labels such as plot title, plot font size, ect."""
 
     def __init__(self):
         self.x_label = None

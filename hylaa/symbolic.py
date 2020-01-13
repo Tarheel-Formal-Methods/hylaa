@@ -1,11 +1,11 @@
-'''
-Hylaa Symoblic dynamics construction
+"""
+.. module:: hylaa.symbolic
+.. moduleauthor:: Stanley Bak
+
+Hylaa Symbolic dynamics construction
 
 Construct A matrix and reset matrix / rhs from symbolic expressions
-
-Stanley Bak
-Nov 2018
-'''
+"""
 
 import sympy
 from sympy.parsing.sympy_parser import parse_expr
@@ -54,7 +54,7 @@ def _extract_linear_terms_rec(e, variables, rv, has_affine_variable):
         except ValueError:
             raise RuntimeError(f"variable {e.name} not found in variable list: {variables}")
 
-        rv[index] += 1      
+        rv[index] += 1
     elif isinstance(e, Mul):
         if len(e.args) != 2:
             raise RuntimeError(f"expected multiplication term with exactly two arguments: '{e}'")
@@ -100,10 +100,10 @@ def make_dynamics_mat(variables, derivatives, constant_dict, has_affine_variable
     rv = []
     subs = {}
     symbol_dict = {}
-    
+
     for var in variables:
         symbol_dict[var] = sympy.symbols(var)
-    
+
     for var, value in constant_dict.items():
         sym_var = sympy.symbols(var)
         subs[sym_var] = value
@@ -138,7 +138,7 @@ def make_condition(variables, condition_list, constant_dict, has_affine_variable
 
     for var in variables:
         symbol_dict[var] = sympy.symbols(var)
-    
+
     for var, value in constant_dict.items():
         sym_var = sympy.symbols(var)
         subs[sym_var] = value
@@ -162,7 +162,7 @@ def make_condition(variables, condition_list, constant_dict, has_affine_variable
 
         # make the expression: left - (right) <= 0
         subtract_cond = f"{left} - ({right})"
-        
+
         sym_cond = parse_expr(subtract_cond, local_dict=symbol_dict)
 
         # substitute in constants
@@ -173,7 +173,7 @@ def make_condition(variables, condition_list, constant_dict, has_affine_variable
 
         if has_affine_variable:
             row.append(0)
-        
+
         mat.append(row)
         rhs.append(-1 * terms[-1])
 

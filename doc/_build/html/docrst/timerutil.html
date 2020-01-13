@@ -33,12 +33,14 @@
   <div class="section" id="module-hylaa.timerutil">
 <span id="timerutil-py"></span><h1>timerutil.py<a class="headerlink" href="#module-hylaa.timerutil" title="Permalink to this headline">¶</a></h1>
 <span class="target" id="module-timerutil"></span><p>Timer utility functions for Hylaa. Timers are used for performance analysis and
-can be statically referred to using Timers.tic(name) and Timers.toc(name)
-September 2016</p>
+can be statically referred to using Timers.tic(name) and Timers.toc(name)</p>
 <dl class="class">
 <dt id="hylaa.timerutil.TimerData">
 <em class="property">class </em><code class="sig-prename descclassname">hylaa.timerutil.</code><code class="sig-name descname">TimerData</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">parent</em><span class="sig-paren">)</span><a class="headerlink" href="#hylaa.timerutil.TimerData" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performance timer object which can be started with the tic() method and paused with toc() method</p>
+<ul class="simple">
+<li><p>Each TimerData object contains of list of TimerData children known as <em>descendents</em></p></li>
+</ul>
 <dl class="method">
 <dt id="hylaa.timerutil.TimerData.full_name">
 <code class="sig-name descname">full_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hylaa.timerutil.TimerData.full_name" title="Permalink to this definition">¶</a></dt>
@@ -57,12 +59,34 @@ September 2016</p>
 <dt id="hylaa.timerutil.TimerData.get_child">
 <code class="sig-name descname">get_child</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#hylaa.timerutil.TimerData.get_child" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a child timer with the given name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> – name</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>descendent TimerData object</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#hylaa.timerutil.TimerData" title="hylaa.timerutil.TimerData">TimerData</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="hylaa.timerutil.TimerData.get_children_recursive">
 <code class="sig-name descname">get_children_recursive</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#hylaa.timerutil.TimerData.get_children_recursive" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all decendants with the given name (returns a list of TimerData)</p>
+<dd><p>Get all TimerData decendants with the given name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> – name</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of TimerData objects</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -74,7 +98,10 @@ September 2016</p>
 <dl class="method">
 <dt id="hylaa.timerutil.TimerData.toc">
 <code class="sig-name descname">toc</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hylaa.timerutil.TimerData.toc" title="Permalink to this definition">¶</a></dt>
-<dd><p>Stop the timer. Timer must be started with the tic() method beforehand.</p>
+<dd><p>Stop the timer. Add elapsed time to counter of total number of seconds.</p>
+<ul class="simple">
+<li><p>Note: Timer must be started with the tic() method beforehand.</p></li>
+</ul>
 </dd></dl>
 
 </dd></dl>
@@ -82,24 +109,26 @@ September 2016</p>
 <dl class="class">
 <dt id="hylaa.timerutil.Timers">
 <em class="property">class </em><code class="sig-prename descclassname">hylaa.timerutil.</code><code class="sig-name descname">Timers</code><a class="headerlink" href="#hylaa.timerutil.Timers" title="Permalink to this definition">¶</a></dt>
-<dd><p>A static class for doing timer measurements.</p>
-<ul class="simple">
-<li><p>Timers.tic(name)</p></li>
-<li><p>Timers.tic(name) to start and stop timers</p></li>
-<li><p>print_stats() to print time statistics</p></li>
-</ul>
-<p>This object includes a stack of TimerData objects. Timers are stopped in respect to the stack order where the timers on the top
-are stopped first.</p>
+<dd><p>A static class for doing time measurements.</p>
 <dl class="method">
 <dt id="hylaa.timerutil.Timers.print_stats">
 <em class="property">static </em><code class="sig-name descname">print_stats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hylaa.timerutil.Timers.print_stats" title="Permalink to this definition">¶</a></dt>
-<dd><p>Print statistics about performance timers to stdout</p>
+<dd><p>Print statistics about TimerData objects to stdout</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="hylaa.timerutil.Timers.print_stats_recursive">
 <em class="property">static </em><code class="sig-name descname">print_stats_recursive</code><span class="sig-paren">(</span><em class="sig-param">td</em>, <em class="sig-param">level</em>, <em class="sig-param">total_time</em><span class="sig-paren">)</span><a class="headerlink" href="#hylaa.timerutil.Timers.print_stats_recursive" title="Permalink to this definition">¶</a></dt>
 <dd><p>Recursively print information about a timer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>td</strong> (<a class="reference internal" href="#hylaa.timerutil.TimerData" title="hylaa.timerutil.TimerData"><em>TimerData</em></a>) – timer object</p></li>
+<li><p><strong>level</strong> – level of recursion</p></li>
+<li><p><strong>total_time</strong> – </p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">

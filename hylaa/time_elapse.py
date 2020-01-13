@@ -1,7 +1,10 @@
-'''
-Time Elapse Computation. This module is primarily responsive for computing
+"""
+.. module:: time_elapse
+.. moduleauthor:: Stanley Bak
+
+Time Elapse Computation. This module is primarily responsible for computing
 l * e^{At} where l is some direction of interest, and t is a multiple of some time step
-'''
+"""
 
 import numpy as np
 
@@ -10,7 +13,8 @@ from hylaa.timerutil import Timers
 from hylaa.time_elapse_expm import TimeElapseExpmMult
 
 class TimeElapser(Freezable):
-    'Object which computes the time-elapse function for a single mode at multiples of the time step'
+    """Object which computes the time-elapse function for a single mode at multiples of the time step
+    """
 
     def __init__(self, mode, step_size):
         self.mode = mode
@@ -23,10 +27,12 @@ class TimeElapser(Freezable):
         self.freeze_attrs()
 
     def get_basis_matrix(self, step_num):
-        '''perform the computation for the the basis matrix and input effects matrix at the passed-in step
+        """Performs computation for the basis matrix and input effects matrix at the passed-in time step
 
-        returns a tuple (basis_matrix, input_effects matrix)
-        '''
+            :param step_num: time step
+            :returns: (basis_matrix, input_effects matrix)
+            :rtype: tuple
+        """
 
         if self.time_elapse_obj is None:
             Timers.tic('init time_elapse_obj')
@@ -60,8 +66,8 @@ class TimeElapser(Freezable):
         return basis_mat, input_effects_mat
 
     def use_lgg_approx(self):
-        '''
-        set this time elapse object to use lgg approximation model
-        '''
+        """
+        Set this TimeElapser object to use the lgg approximation model
+        """
 
         self.time_elapse_obj.use_lgg_approx()

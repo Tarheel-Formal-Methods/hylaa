@@ -4,7 +4,6 @@
 
 Timer utility functions for Hylaa. Timers are used for performance analysis and
 can be statically referred to using Timers.tic(name) and Timers.toc(name)
-September 2016
 """
 
 import time
@@ -12,7 +11,10 @@ import time
 from termcolor import cprint
 
 class TimerData():
-    """Performance timer object which can be started with the tic() method and paused with toc() method"""
+    """Performance timer object which can be started with the tic() method and paused with toc() method
+
+        - Each TimerData object contains of list of TimerData children known as *descendents*
+    """
 
     def __init__(self, name, parent):
         assert parent is None or isinstance(parent, TimerData)
@@ -27,6 +29,10 @@ class TimerData():
 
     def get_child(self, name):
         """Get a child timer with the given name
+
+            :param name: name
+            :returns: descendent TimerData object
+            :rtype: TimerData
         """
 
         rv = None
@@ -39,7 +45,11 @@ class TimerData():
         return rv
 
     def get_children_recursive(self, name):
-        """Get all decendants with the given name (returns a list of TimerData)
+        """Get all TimerData decendants with the given name.
+
+            :param name: name
+            :returns: list of TimerData objects
+            :rtype: list
         """
         rv = []
 
@@ -75,7 +85,9 @@ class TimerData():
         self.last_start_time = time.perf_counter()
 
     def toc(self):
-        """Stop the timer. Timer must be started with the tic() method beforehand."""
+        """Stop the timer. Add elapsed time to counter of total number of seconds.
+
+           - Note: Timer must be started with the tic() method beforehand."""
 
         #print "Toc({})".format(self.name)
 
@@ -87,15 +99,7 @@ class TimerData():
 
 class Timers():
     """
-    A static class for doing timer measurements.
-
-    - Timers.tic(name)
-    - Timers.tic(name) to start and stop timers
-    - print_stats() to print time statistics
-
-    This object includes a stack of TimerData objects. Timers are stopped in respect to the stack order where the timers on the top
-    are stopped first.
-
+    A static class for doing time measurements.
     """
 
     top_level_timer = None
@@ -171,8 +175,10 @@ class Timers():
     def print_stats_recursive(td, level, total_time):
         """Recursively print information about a timer
 
-            :param td: TimerData object
-            :param level:
+            :param td: timer object
+            :type td: TimerData
+            :param level: level of recursion
+            :param total_time:
         """
 
         low_threshold = 5.0
@@ -184,7 +190,6 @@ class Timers():
         percent_total = 100 * td.total_secs / total_time
 
         if percent_total < low_threshold:
-            def print_func(text):
                 'below threshold print function'
 
                 return cprint(text, 'grey')

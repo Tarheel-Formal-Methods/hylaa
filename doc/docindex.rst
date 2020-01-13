@@ -3,3 +3,6 @@ Documentation
 
 - :doc:`docrst/util`
 - :doc:`docrst/timerutil`
+- :doc:`docrst/time_elapse`
+- :doc:`docrst/time_elapse_expm`
+- :doc:`docrst/symbolic`

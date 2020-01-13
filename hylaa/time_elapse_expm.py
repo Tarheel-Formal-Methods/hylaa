@@ -1,8 +1,8 @@
 '''
-Time-elapse object for matrix exponential and expm-mul methods
+.. module:: time_elapse_expm
+.. moduleauthor:: Stanley Bak
 
-Stanley Bak
-April 2018
+Time-elapse object for matrix exponential and expm-mul methods
 '''
 
 from scipy.sparse import csc_matrix
@@ -14,9 +14,13 @@ from hylaa.util import Freezable
 from hylaa.timerutil import Timers
 
 class TimeElapseExpmMult(Freezable):
-    'container object for expm + matrix-vec mult method'
+    """Container object for expm + matrix-vec multiplication routines"""
 
     def __init__(self, time_elapser):
+        """
+        :param time_elapser: TimeElapser object
+        :type time_elapser: TimeElapser
+        """
         self.time_elapser = time_elapser
         self.a_csc = csc_matrix(time_elapser.mode.a_csr)
         self.b_csc = None if time_elapser.mode.b_csr is None else csc_matrix(time_elapser.mode.b_csr)
@@ -35,11 +39,13 @@ class TimeElapseExpmMult(Freezable):
         self.freeze_attrs()
 
     def init_matrices(self):
-        'initialize the one-step basis and input effects matrices'
+        """Initializes the one-step basis and input effects matrices
+
+        """
 
         dims = self.dims
-        Timers.tic('expm')
-        self.one_step_matrix_exp = expm(self.a_csc * self.time_elapser.step_size)
+        Timers.tic('expm') #Countiing time elapsed for matrix multiplication
+        self.one_step_matrix_exp = expm(self.a_csc * self.time_elapser.step_size) # e^{At}
         Timers.toc('expm')
 
         Timers.tic('toarray')
@@ -69,7 +75,17 @@ class TimeElapseExpmMult(Freezable):
                 self.one_step_input_effects_matrix[:, c] = col[:dims]
 
     def assign_basis_matrix(self, step_num):
-        'first step matrix exp, other steps matrix multiplication'
+        """
+        Computes the basis and input effects matrices for the desired time step.
+        The first step will be computed from matrix exp.
+        Subsequent steps will be computed from matrix multiplication.
+
+        - Stores computed basis matrix into self.cur_basis_matrix
+        - Stores computed input effects matrix into self.cur_input_effects_matrix
+
+        :param step_num: step number to compute
+        :type step_num: int
+        """
 
         Timers.tic('init_matrices')
         if self.one_step_matrix_exp is None:
@@ -88,7 +104,7 @@ class TimeElapseExpmMult(Freezable):
                 # make new (wider) input effects matrix
                 blocks = [self.cur_input_effects_matrix, prev_step_mat_exp]
                 self.cur_input_effects_matrix = np.concatenate(blocks, axis=1)
-            
+
         elif step_num == self.cur_step + 1:
             Timers.tic('quick_step')
             prev_step_mat_exp = self.cur_basis_matrix
@@ -99,7 +115,7 @@ class TimeElapseExpmMult(Freezable):
                 if self.use_lgg:
                     # cut cur_input_effects matrix into the relevant portion
                     self.cur_input_effects_matrix = self.cur_input_effects_matrix[:, 0:self.time_elapser.inputs]
-                
+
                 self.cur_input_effects_matrix = np.dot(self.one_step_matrix_exp, self.cur_input_effects_matrix)
 
                 if self.use_lgg:
@@ -135,9 +151,8 @@ class TimeElapseExpmMult(Freezable):
         self.cur_step = step_num
 
     def use_lgg_approx(self):
-        '''
-        set this time elapse object to use lgg approximation model
-        '''
-
+        """
+        Sets this TimeElapseExpmMult object to use lgg approximation model
+        """
         self.use_lgg = True
         self.one_step_input_effects_matrix = self.b_csc.toarray() * self.time_elapser.step_size

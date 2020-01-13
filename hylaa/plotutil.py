@@ -1,8 +1,10 @@
-'''
+
+"""
 Hylaa Plot Utilities
-Stanley Bak
+.. module hylaa.plotutil
+.. moduleauthor Stanley Bak
 Sept 2016
-'''
+"""
 
 import sys
 import time
@@ -167,7 +169,7 @@ class DrawnShapes(Freezable):
 
         # objects later in the list will be drawn after (above)
         draw_above = ['gray_state', 'cur_state']
-        
+
         for name, polys in self.parent_to_polys.items():
             if not name in draw_above:
                 rv.append(polys)
@@ -192,7 +194,7 @@ class DrawnShapes(Freezable):
 
         def init_polycollection_func():
             "initialization function if polycollection doesn't exist"
-            
+
             return collections.PolyCollection([], lw=self.plotman.settings.reachable_poly_width + 3, animated=True,
                                               edgecolor='gray', facecolor=(0., 0., 0., 0.), zorder=2)
 
@@ -203,7 +205,7 @@ class DrawnShapes(Freezable):
 
         def init_polycollection_func():
             "initialization function if polycollection doesn't exist"
-            
+
             return collections.PolyCollection([], lw=self.plotman.settings.reachable_poly_width, animated=True,
                                               edgecolor='k', facecolor=(0., 0., 0., 0.0), zorder=3)
 
@@ -215,7 +217,7 @@ class DrawnShapes(Freezable):
         assert verts_list is None or isinstance(verts_list, list)
 
         polys = self.parent_to_polys.get(name)
-        
+
         if polys is None:
             # setup for first time drawing cur_state
 
@@ -239,7 +241,7 @@ class DrawnShapes(Freezable):
         '''save the current simulation lines (stop appending to them)'''
 
         rv_verts = self.cur_sim_lines
-        
+
         lines = self.parent_to_polys.get('sim_lines')
 
         if lines is None:
@@ -290,7 +292,7 @@ class DrawnShapes(Freezable):
         for i, pt in enumerate(verts):
             if pt is None:
                 continue
-            
+
             self.cur_sim_lines[i].append(pt)
 
             line2d = self.cur_sim_line2ds[i]
@@ -316,7 +318,7 @@ class DrawnShapes(Freezable):
         else:
             xs = [pt[0] for pt in verts if pt is not None]
             ys = [pt[1] for pt in verts if pt is not None]
-        
+
             markers.set_xdata(xs)
             markers.set_ydata(ys)
 
@@ -374,7 +376,7 @@ class PlotManager(Freezable):
 
         self.fig = None
         self.axes_list = None
-        
+
         self.actual_limits = None # AxisLimits object
         self.drawn_limits = None # AxisLimits object
 
@@ -427,12 +429,12 @@ class PlotManager(Freezable):
                 plot_vecs = lpplot.make_plot_vecs(self.settings.num_angles)
 
             self.plot_vec_list.append(plot_vecs)
-            
+
         self.num_subplots = len(self.plot_vec_list)
 
     def draw_counterexample(self, ce_segments):
         '''we got a concrete counter example, draw it (if we're plotting)
-        
+
         currently this only works for simple plots
         '''
 
@@ -494,7 +496,7 @@ class PlotManager(Freezable):
 
             lim = self.actual_limits[subplot]
             drawn = self.drawn_limits[subplot]
-            
+
             lim.xmin = lim.xmax = first_x
             lim.ymin = lim.ymax = first_y
             drawn.xmin = drawn.xmax = first_x
@@ -543,12 +545,12 @@ class PlotManager(Freezable):
         'create the plot'
 
         if not self.settings.plot_mode in [PlotSettings.PLOT_NONE]:
-            
+
             self.fig, axes_list = plt.subplots(nrows=self.num_subplots, ncols=1, figsize=self.settings.plot_size, \
                                                     squeeze=False)
 
             self.axes_list = []
-            
+
             for row in axes_list:
                 for axes in row:
                     self.axes_list.append(axes)
@@ -628,7 +630,7 @@ class PlotManager(Freezable):
                         plot_pts.append(None)
                     else:
                         _, pt, steps = obj
-                        cur_time = steps * self.core.settings.step_size 
+                        cur_time = steps * self.core.settings.step_size
                         x, y = lpplot.pt_to_plot_xy(pt, xdim, ydim, cur_time)
 
                         plot_pts.append((x, y))
@@ -785,7 +787,7 @@ class PlotManager(Freezable):
                 self.settings.interactive_skip_count -= 1 # modify the setting in-place... probably okay
                 self.interactive.paused = False
                 self.core.print_verbose(f"Unpausing plot. Skip count is now {self.settings.interactive_skip_count}.")
-                
+
         elif self.interactive.paused and self.settings.plot_mode == PlotSettings.PLOT_VIDEO:
             if self.pause_frames is None:
                 self.pause_frames = self.settings.video_pause_frames
@@ -866,7 +868,7 @@ class PlotManager(Freezable):
         while not self.core.is_finished():
             if self.settings.plot_mode == PlotSettings.PLOT_VIDEO:
                 self.core.print_verbose("Saving Video Frame #{}".format(frame_counter))
-                
+
             yield frame_counter
             frame_counter += 1
 
@@ -890,7 +892,7 @@ class PlotManager(Freezable):
 
         def step_pressed(_):
             'event function for step button press'
-            
+
             self.interactive.paused = False
             self.interactive.step = True
 
@@ -899,7 +901,7 @@ class PlotManager(Freezable):
 
         def aggdag_pressed(_):
             'event function for save aggdag button press'
-            
+
             filename = self.core.aggdag.save_viz()
 
             self.core.print_normal(f"Saved to filename: {filename}")
