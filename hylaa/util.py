@@ -11,7 +11,8 @@ import sys
 
 class Freezable():
     """
-    An object whose attributes can be frozen (prevent new attributes from being created)"""
+    An object whose attributes can be frozen (prevent new attributes from being created)
+    """
 
     _frozen = False
 

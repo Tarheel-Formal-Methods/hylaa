@@ -44,23 +44,8 @@ The latest version of Hylaa is always available on our github repository at <a c
 The main citation to use for Hylaa is: “HyLAA: A Tool for Computing Simulation-Equivalent Reachability for Linear Systems”, S. Bak, P. Duggirala, 20th International Conference on Hybrid Systems: Computation and Control (HSCC 2017)</p>
 <p>The code was mostly written by Stanley Bak (<a class="reference external" href="http://stanleybak.com">http://stanleybak.com</a>) with input from Parasara Sridhar Duggirala (<a class="reference external" href="http://engr.uconn.edu/~psd">http://engr.uconn.edu/~psd</a>).</p>
 <p>Hylaa is released under the GPL v3 license (see the LICENSE file). Earlier versions have been approved for public release (DISTRIBUTION A: Approved for public release; distribution unlimited #88ABW-2016-5976, 22 NOV 2016).</p>
-</div>
-<div class="section" id="installation-instructions">
-<h1>Installation Instructions<a class="headerlink" href="#installation-instructions" title="Permalink to this headline">¶</a></h1>
-<p>This version of Hylaa runs in <cite>python3</cite> and requires a few other libraries that you can install with <cite>pip3</cite>, the python package manager. You must also set your <cite>PYTHONPATH</cite> environment variable so that it knows where the hylaa source is located. There is a <cite>Dockerfile</cite> in this repository which is used as part of our continuous integration framework that has step by step commands for installing the necessary packages and dependencies. This serves as the installation documentation, as it’s always up to date.</p>
-</div>
-<div class="section" id="getting-started-examples">
-<h1>Getting Started + Examples<a class="headerlink" href="#getting-started-examples" title="Permalink to this headline">¶</a></h1>
-<p>The easiest way to get started with Hylaa is to run some of the examples. Once installed and setup, Hylaa models are just python source files you directly with <cite>python3</cite> in a terminal.</p>
-<p>Go to <cite>examples/harmonic_oscillator</cite> and run <cite>ha.py</cite> from the command line (<cite>python ha.py</cite>). This should create <cite>plot.png</cite> in the same folder, which will be an 2-d plot of the reachable set.</p>
-<p>The dynamics in this example are given as x’ = <strong>A</strong> x, where <strong>A</strong> is the (potentially sparse) dynamics matrix. This is defined in the <cite>define_ha</cite> function in the <cite>ha.py</cite> source file.</p>
-<p>Initial states and unsafe states are given as conjunctions of linear constraints. These are defined in the <cite>make_init</cite> function.</p>
-<p>Finally, computation settings are given in the <cite>define_settings</cite> function. There are lots of settings that can be adjusted, which can be found in <cite>hylaa/settings.py</cite>, including comments describing what each one does.</p>
-<p>The easiest way to use Hylaa on your example is to copy an example from the examples folder and edit that. Notice that models are python code, which means you can
-create the model programatically using loops or by loading the dynamics from a .mat file.</p>
-</div>
-<div class="section" id="documentation">
-<h1>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference internal" href="docrst/install.html"><span class="doc">Installation Instructions</span></a></p>
+<p><a class="reference internal" href="docrst/example.html"><span class="doc">Getting Started + Examples</span></a></p>
 <p><a class="reference internal" href="docindex.html"><span class="doc">Documentation</span></a></p>
 </div>
 

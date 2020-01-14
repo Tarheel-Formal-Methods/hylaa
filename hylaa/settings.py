@@ -1,11 +1,13 @@
-'''
-Hylaa Settings File
-Stanley Bak, 2018
-'''
+"""
+.. module:: settings
+.. moduleauthor:: Stanley Bak
+
+Settings for adjusting and configuring Hylaa functionalities.
+"""
 
 import math
 
-from matplotlib import animation
+#from matplotlib import animation
 
 from hylaa.util import Freezable
 from hylaa import aggstrat
@@ -19,7 +21,9 @@ from hylaa import aggstrat
 #np.set_printoptions(suppress=True)
 
 class HylaaSettings(Freezable):  # pylint: disable=too-few-public-methods
-    'Settings for the computation'
+    """Class enveloping Hylaa global settings
+
+    """
 
     STDOUT_NONE, STDOUT_NORMAL, STDOUT_VERBOSE, STDOUT_DEBUG = range(4)
 
@@ -30,28 +34,28 @@ class HylaaSettings(Freezable):  # pylint: disable=too-few-public-methods
     def __init__(self, step_size, max_time):
         plot_settings = PlotSettings()
 
-        self.step_size = step_size # simulation step size
+        self.step_size = step_size #: simulation step size
         self.num_steps = int(math.ceil(max_time / step_size))
 
         self.plot = plot_settings
         self.stdout = HylaaSettings.STDOUT_NORMAL
-        self.stdout_colors = [None, "white", "blue", "yellow"] # colors for each level of printing
+        self.stdout_colors = [None, "white", "blue", "yellow"] #: colors for each level of printing
 
         ### SIMULATION-EQUIVALENT SEMANTICS / COMPUTATION PARAMETERS ###
-        self.process_urgent_guards = False # allow zero continuous-post steps between transitions?
-        self.do_guard_strengthening = True # add invariants of target modes to each guard?
-        self.optimize_tt_transitions = True # auto-detect time-triggered transitions and use single-step semantics?
+        self.process_urgent_guards = False #: allow zero continuous-post steps between transitions?
+        self.do_guard_strengthening = True #: add invariants of target modes to each guard?
+        self.optimize_tt_transitions = True #: auto-detect time-triggered transitions and use single-step semantics?
         self.approx_model = HylaaSettings.APPROX_NONE
         self.skip_zero_dynamics_modes = True
 
         # what to do when an error appears reachable
-        self.stop_on_aggregated_error = False # stop whenever any state (aggregated or not) reaches an error mode
-        self.stop_on_concrete_error = True # stop whenver a concrete state reaches an error
-        self.make_counterexample = True # save counter-example to data structure / file?
+        self.stop_on_aggregated_error = False #: stop whenever any state (aggregated or not) reaches an error mode
+        self.stop_on_concrete_error = True #: stop whenver a concrete state reaches an error
+        self.make_counterexample = True #: save counter-example to data structure / file?
 
-        self.aggstrat = aggstrat.Aggregated() # aggregation strategy class
+        self.aggstrat = aggstrat.Aggregated() #: aggregation strategy class
 
-        # for deterministic random numbers (simulations / color selection)
+        #: for deterministic random numbers (simulations / color selection)
         self.random_seed = 0
 
         self.freeze_attrs()
@@ -116,7 +120,8 @@ class PlotSettings(Freezable): # pylint: disable=too-few-public-methods,too-many
         self.freeze_attrs()
 
 class LabelSettings(Freezable):
-    """SHettings for labels such as plot title, plot font size, ect."""
+    """Settings for labels such as plot title, plot font size, ect.
+    """
 
     def __init__(self):
         self.x_label = None

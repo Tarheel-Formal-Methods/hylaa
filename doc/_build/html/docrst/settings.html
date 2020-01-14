@@ -1,0 +1,191 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>settings.py &#8212; hylaa  documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-hylaa.settings">
+<span id="settings-py"></span><h1>settings.py<a class="headerlink" href="#module-hylaa.settings" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-settings"></span><p>Settings for adjusting and configuring Hylaa functionalities.</p>
+<dl class="class">
+<dt id="hylaa.settings.HylaaSettings">
+<em class="property">class </em><code class="sig-prename descclassname">hylaa.settings.</code><code class="sig-name descname">HylaaSettings</code><span class="sig-paren">(</span><em class="sig-param">step_size</em>, <em class="sig-param">max_time</em><span class="sig-paren">)</span><a class="headerlink" href="#hylaa.settings.HylaaSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class enveloping Hylaa global settings</p>
+<dl class="attribute">
+<dt id="hylaa.settings.HylaaSettings.aggstrat">
+<code class="sig-name descname">aggstrat</code><em class="property"> = None</em><a class="headerlink" href="#hylaa.settings.HylaaSettings.aggstrat" title="Permalink to this definition">¶</a></dt>
+<dd><p>aggregation strategy class</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hylaa.settings.HylaaSettings.do_guard_strengthening">
+<code class="sig-name descname">do_guard_strengthening</code><em class="property"> = None</em><a class="headerlink" href="#hylaa.settings.HylaaSettings.do_guard_strengthening" title="Permalink to this definition">¶</a></dt>
+<dd><p>add invariants of target modes to each guard?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hylaa.settings.HylaaSettings.make_counterexample">
+<code class="sig-name descname">make_counterexample</code><em class="property"> = None</em><a class="headerlink" href="#hylaa.settings.HylaaSettings.make_counterexample" title="Permalink to this definition">¶</a></dt>
+<dd><p>save counter-example to data structure / file?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hylaa.settings.HylaaSettings.optimize_tt_transitions">
+<code class="sig-name descname">optimize_tt_transitions</code><em class="property"> = None</em><a class="headerlink" href="#hylaa.settings.HylaaSettings.optimize_tt_transitions" title="Permalink to this definition">¶</a></dt>
+<dd><p>auto-detect time-triggered transitions and use single-step semantics?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hylaa.settings.HylaaSettings.process_urgent_guards">
+<code class="sig-name descname">process_urgent_guards</code><em class="property"> = None</em><a class="headerlink" href="#hylaa.settings.HylaaSettings.process_urgent_guards" title="Permalink to this definition">¶</a></dt>
+<dd><p>allow zero continuous-post steps between transitions?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hylaa.settings.HylaaSettings.random_seed">
+<code class="sig-name descname">random_seed</code><em class="property"> = None</em><a class="headerlink" href="#hylaa.settings.HylaaSettings.random_seed" title="Permalink to this definition">¶</a></dt>
+<dd><p>for deterministic random numbers (simulations / color selection)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hylaa.settings.HylaaSettings.stdout_colors">
+<code class="sig-name descname">stdout_colors</code><em class="property"> = None</em><a class="headerlink" href="#hylaa.settings.HylaaSettings.stdout_colors" title="Permalink to this definition">¶</a></dt>
+<dd><p>colors for each level of printing</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hylaa.settings.HylaaSettings.step_size">
+<code class="sig-name descname">step_size</code><em class="property"> = None</em><a class="headerlink" href="#hylaa.settings.HylaaSettings.step_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>simulation step size</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hylaa.settings.HylaaSettings.stop_on_aggregated_error">
+<code class="sig-name descname">stop_on_aggregated_error</code><em class="property"> = None</em><a class="headerlink" href="#hylaa.settings.HylaaSettings.stop_on_aggregated_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>stop whenever any state (aggregated or not) reaches an error mode</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hylaa.settings.HylaaSettings.stop_on_concrete_error">
+<code class="sig-name descname">stop_on_concrete_error</code><em class="property"> = None</em><a class="headerlink" href="#hylaa.settings.HylaaSettings.stop_on_concrete_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>stop whenver a concrete state reaches an error</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hylaa.settings.LabelSettings">
+<em class="property">class </em><code class="sig-prename descclassname">hylaa.settings.</code><code class="sig-name descname">LabelSettings</code><a class="headerlink" href="#hylaa.settings.LabelSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Settings for labels such as plot title, plot font size, ect.</p>
+<dl class="method">
+<dt id="hylaa.settings.LabelSettings.big">
+<code class="sig-name descname">big</code><span class="sig-paren">(</span><em class="sig-param">size=30</em><span class="sig-paren">)</span><a class="headerlink" href="#hylaa.settings.LabelSettings.big" title="Permalink to this definition">¶</a></dt>
+<dd><p>increase sizes of labels</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hylaa.settings.LabelSettings.turn_off">
+<code class="sig-name descname">turn_off</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hylaa.settings.LabelSettings.turn_off" title="Permalink to this definition">¶</a></dt>
+<dd><p>turn off plot labels</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hylaa.settings.PlotSettings">
+<em class="property">class </em><code class="sig-prename descclassname">hylaa.settings.</code><code class="sig-name descname">PlotSettings</code><a class="headerlink" href="#hylaa.settings.PlotSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>plot settings container</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">hylaa</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Stanley Bak.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/docrst/settings.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

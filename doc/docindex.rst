@@ -6,3 +6,4 @@ Documentation
 - :doc:`docrst/time_elapse`
 - :doc:`docrst/time_elapse_expm`
 - :doc:`docrst/symbolic`
+- :doc:`docrst/settings`

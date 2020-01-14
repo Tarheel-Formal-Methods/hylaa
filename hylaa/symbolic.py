@@ -1,5 +1,5 @@
 """
-.. module:: hylaa.symbolic
+.. module:: symbolic
 .. moduleauthor:: Stanley Bak
 
 Hylaa Symbolic dynamics construction
@@ -12,10 +12,13 @@ from sympy.parsing.sympy_parser import parse_expr
 from sympy import Mul, Expr, Add, Symbol, Number
 
 def extract_linear_terms(e, variables, has_affine_variable):
-    '''extract linear terms from a flat sympy expression
+    """Extracts linear terms from a flat sympy expression
 
-    returns a list of numbers, one for each variable
-    '''
+    :param e: sympy expression
+    :param variables: list of variables involved
+    :param has_affine_variable: boolean indicting the existence of affine variables in expression
+    :returns: list of numbers, one for each variable
+    """
 
     rv = [0] * len(variables)
 
@@ -33,7 +36,7 @@ def extract_linear_terms(e, variables, has_affine_variable):
     return rv
 
 def _extract_linear_terms_rec(e, variables, rv, has_affine_variable):
-    'extract linear terms'
+    """extract linear terms"""
 
     if isinstance(e, Add):
         _extract_linear_terms_rec(e.args[0], variables, rv, has_affine_variable)
@@ -81,7 +84,8 @@ def _extract_linear_terms_rec(e, variables, rv, has_affine_variable):
         raise RuntimeError(f"unsupported term of type {type(e)}: '{e}'")
 
 def make_reset_mat(variables, resets, constant_dict, has_affine_variable=False):
-    'make the matrix for a reset operation'
+    """Make the matrix for a reset operation
+    """
 
     mat = make_dynamics_mat(variables, resets, constant_dict, has_affine_variable=has_affine_variable)
 
@@ -92,10 +96,14 @@ def make_reset_mat(variables, resets, constant_dict, has_affine_variable=False):
     return mat
 
 def make_dynamics_mat(variables, derivatives, constant_dict, has_affine_variable=False):
-    '''make the dynamics A matrix from the list of variables, derivatives, and a dict mapping constants to values
-
-    returns a list of lists (a matrix) of size len(variables) by len(variables)
-    '''
+    """Makes the dynamics **A** matrix from the list of variables, derivatives, and a dict mapping constants to values.
+    
+       :param variables: list of involved variables
+       :param derivatives: list of symbols representing derivatives
+       :param constant_dict: dictonary of variable keys mapping to constant values
+       :param has_affine_variable: boolean indicting the existence of affine variables in expression
+       :returns: list of lists (a matrix) of size len(variables) by len(variables)
+    """
 
     rv = []
     subs = {}
@@ -123,11 +131,15 @@ def make_dynamics_mat(variables, derivatives, constant_dict, has_affine_variable
     return rv
 
 def make_condition(variables, condition_list, constant_dict, has_affine_variable=False):
-    '''make a condition matrix and right-hand-side (rhs) from a set of string conditions.
+    """Makes a condition matrix and the right-hand-side (rhs) from a set of condition strings.
     condition_list is a list of strings with a single '<=' or '>=' condition like 'x - 1 + y <= 2 * x + 3'
 
-    returns a 2-tuple: (mat, rhs)
-    '''
+    :param variables: list of involved variables
+    :param condition_list: list of condition strings
+    :param constant_dict: dictonary of variable keys mapping to constant values
+    :param has_affine_variable: boolean indicting the existence of affine variables in expression
+    :returns: tuple: (mat, rhs)
+    """
 
     assert isinstance(condition_list, list), "condition_list should be a list of string conditions"
 

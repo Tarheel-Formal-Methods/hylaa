@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>symbolic.py &#8212; hylaa  documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-hylaa.symbolic">
+<span id="symbolic-py"></span><h1>symbolic.py<a class="headerlink" href="#module-hylaa.symbolic" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-symbolic"></span><p>Hylaa Symbolic dynamics construction</p>
+<p>Construct A matrix and reset matrix / rhs from symbolic expressions</p>
+<dl class="function">
+<dt id="hylaa.symbolic.extract_linear_terms">
+<code class="sig-prename descclassname">hylaa.symbolic.</code><code class="sig-name descname">extract_linear_terms</code><span class="sig-paren">(</span><em class="sig-param">e</em>, <em class="sig-param">variables</em>, <em class="sig-param">has_affine_variable</em><span class="sig-paren">)</span><a class="headerlink" href="#hylaa.symbolic.extract_linear_terms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extracts linear terms from a flat sympy expression</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>e</strong> – sympy expression</p></li>
+<li><p><strong>variables</strong> – list of variables involved</p></li>
+<li><p><strong>has_affine_variable</strong> – boolean indicting the existence of affine variables in expression</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of numbers, one for each variable</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="hylaa.symbolic.make_condition">
+<code class="sig-prename descclassname">hylaa.symbolic.</code><code class="sig-name descname">make_condition</code><span class="sig-paren">(</span><em class="sig-param">variables</em>, <em class="sig-param">condition_list</em>, <em class="sig-param">constant_dict</em>, <em class="sig-param">has_affine_variable=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hylaa.symbolic.make_condition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a condition matrix and the right-hand-side (rhs) from a set of condition strings.
+condition_list is a list of strings with a single ‘&lt;=’ or ‘&gt;=’ condition like ‘x - 1 + y &lt;= 2 * x + 3’</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>variables</strong> – list of involved variables</p></li>
+<li><p><strong>condition_list</strong> – list of condition strings</p></li>
+<li><p><strong>constant_dict</strong> – dictonary of variable keys mapping to constant values</p></li>
+<li><p><strong>has_affine_variable</strong> – boolean indicting the existence of affine variables in expression</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>tuple: (mat, rhs)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="hylaa.symbolic.make_dynamics_mat">
+<code class="sig-prename descclassname">hylaa.symbolic.</code><code class="sig-name descname">make_dynamics_mat</code><span class="sig-paren">(</span><em class="sig-param">variables</em>, <em class="sig-param">derivatives</em>, <em class="sig-param">constant_dict</em>, <em class="sig-param">has_affine_variable=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hylaa.symbolic.make_dynamics_mat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes the dynamics <strong>A</strong> matrix from the list of variables, derivatives, and a dict mapping constants to values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>variables</strong> – list of involved variables</p></li>
+<li><p><strong>derivatives</strong> – list of symbols representing derivatives</p></li>
+<li><p><strong>constant_dict</strong> – dictonary of variable keys mapping to constant values</p></li>
+<li><p><strong>has_affine_variable</strong> – boolean indicting the existence of affine variables in expression</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of lists (a matrix) of size len(variables) by len(variables)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="hylaa.symbolic.make_reset_mat">
+<code class="sig-prename descclassname">hylaa.symbolic.</code><code class="sig-name descname">make_reset_mat</code><span class="sig-paren">(</span><em class="sig-param">variables</em>, <em class="sig-param">resets</em>, <em class="sig-param">constant_dict</em>, <em class="sig-param">has_affine_variable=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hylaa.symbolic.make_reset_mat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make the matrix for a reset operation</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">hylaa</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Stanley Bak.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/docrst/symbolic.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
